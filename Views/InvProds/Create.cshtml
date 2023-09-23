@@ -1,0 +1,135 @@
+﻿@model MoonStar.Models.InvProd
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+ <table id="invdet" class="table">
+     <thead>
+         <tr>
+             <th> @Html.LabelFor(model => model.CustName, htmlAttributes: new { @class = "control-label col-md-2" })</th> 
+             <th>@Html.LabelFor(model => model.ProductId, "ProductId", htmlAttributes: new { @class = "control-label col-md-2" })</th>
+             <th>@Html.LabelFor(model => model.product.UnitPrice, "invoice number", htmlAttributes: new { @class = "control-label col-md-2" })</th>
+         </tr>
+
+     </thead>
+     <td><div class="col-md-10">
+    @Html.EditorFor(model => model.CustName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.CustName, "", new { @class = "text-danger" })
+</div></td>
+     <td>
+
+         <div class="col-md-10">
+             @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control" })
+             @Html.ValidationMessageFor(model => model.product.ProductName, "", new { @class = "text-danger" })
+         </div>
+     </td>
+     <td>
+         <div class="col-md-10">
+             @Html.DropDownList("InvId", null, htmlAttributes: new { @class = "form-control" })
+             @Html.ValidationMessageFor(model => model.product.UnitPrice, "", new { @class = "text-danger" })
+         </div>
+     </td>
+
+ </table>
+    
+
+        
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <button id="btnadd" type="button" class="btn" onclick="AddItem(this)">Add</button>
+            </div>
+
+            <div>
+                
+                <button id="btnremove" type="button" class="btn btn-sm btn-secondary invisible">Delete</button>
+
+            </div>
+        </div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+@*<div class="col-md-offset-2 col-md-10">
+    <input type="submit" value="Create" class="btn btn-default" />
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+<script type="text/javascript">
+
+		$(".custom-file-input").on("change", function () {
+			var fileName = $(this).val().split("\\").pop();
+			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+		});
+
+
+
+		function DeleteItem(btn) {
+			$(btn).closest('tr').remove();
+		}
+
+
+
+		function AddItem(btn) {
+
+		    var table = document.getElementById('invdet');
+			var rows = table.getElementsByTagName('tr');
+
+			var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+			var lastrowIdx = document.getElementById('hdnLastIndex').value;
+
+			var nextrowIdx = eval(lastrowIdx) + 1;
+
+			document.getElementById('hdnLastIndex').value = nextrowIdx;
+
+			rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+			rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+			rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+
+			var newRow = table.insertRow();
+			newRow.innerHTML = rowOuterHtml;
+
+
+
+			var btnAddID = btn.id;
+			var btnDeleteid = btnAddID.replaceAll('btnadd', 'btnremove');
+
+			var delbtn = document.getElementById(btnDeleteid);
+			delbtn.classList.add("visible");
+			delbtn.classList.remove("invisible");
+
+
+			var addbtn = document.getElementById(btnAddID);
+			addbtn.classList.remove("visible");
+			addbtn.classList.add("invisible");
+
+		}
+
+</script>
+}
+
+
+
+}
+

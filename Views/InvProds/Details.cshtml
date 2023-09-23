@@ -1,0 +1,43 @@
+﻿@model MoonStar.Models.InvProd
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>InvProd</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.invoice.inname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.invoice.inname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
